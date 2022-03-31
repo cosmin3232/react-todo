@@ -66,7 +66,7 @@ function TodoForm() {
         <StatusSelect select={(status) => setStatus(status)}/>
         <div className="">
           <input onChange={handleTextChange} type="text" value={text} placeholder="Write a description"/>
-          <input onChange={handleDateChange} type="date" value={date} lang="ro-RO" placeholder="Choose the date"/>
+          <input onChange={handleDateChange} type="date" value={date} format="dd-mm-yyyy" lang="ro-RO" placeholder="Choose the date"/>
         </div>
         <Button type='submit' version='primary' isDisabled={btnDisabled}>
             Send

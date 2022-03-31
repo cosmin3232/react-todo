@@ -6,8 +6,8 @@ import TodoForm from './components/TodoForm';
 import AboutPage from './pages/AboutPage';
 import Post from './components/Post';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
-import AboutIconLink from './components/AboutIconLink';
 import { TodoService } from './context/TodoContext';
+import ComponentPage from "./pages/ComponentPage";
 
 function App() {
     return (
@@ -26,19 +26,22 @@ function App() {
                         </Route>
                     
                         <Route path='about' element={<AboutPage />}/>
+                        <Route path='components' element={<ComponentPage />}/>
                         {/* <Route path='/post/:id/:name' element={<Post/>}/> */}
                         <Route path='/post/*' element={<Post/>}/>
                     </Routes>
 
                     <Card>
-                        <NavLink to ='/' activeclassname='active'>
+                        <NavLink to ='/' className='nav-link' activeclassname='active'>
                             Home
                         </NavLink>
-                        <NavLink to ='/about' activeclassname='active'>
+                        <NavLink to ='/about' className='nav-link' activeclassname='active'>
                             About
                         </NavLink>
+                        <NavLink to ='/components' className='nav-link' activeclassname='active'>
+                            Hall of Components
+                        </NavLink>
                     </Card>
-                    <AboutIconLink />
                 </div>
             </Router>
         </TodoService>

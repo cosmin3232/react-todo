@@ -2,9 +2,7 @@ import spinner from '../assets/spinner.gif';
 
 function Spinner() {
   return (
-    <img src={spinner} alt="Loading..." stlye={
-        {width: '100px', margin: 'auto', display: 'block'}
-    }/>
+    <img src={spinner} alt="Loading..." className="spinner"/>
   )
 }
 

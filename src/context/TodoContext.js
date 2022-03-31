@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import Toastr from '../components/shared/Toastr';
 const TodoContext = createContext();
 
 export const TodoService = ({children}) => {
@@ -7,6 +8,10 @@ export const TodoService = ({children}) => {
     const [todoEdit, setTodoEdit] = useState({
         item: {},
         edit: false,
+    });
+    const [toastr, setToastr] = useState({
+        display: false,
+        status: 'success',
     });
 
     useEffect(() => {
@@ -29,14 +34,28 @@ export const TodoService = ({children}) => {
             },
             body: JSON.stringify(newTodo),
         });
-        const data = await response.json();
-        setTodo([data, ...todo]);
+        await response.json().then(
+            (data) => {
+                showToastr('success');
+                setTodo([data, ...todo]);
+            },
+            (err) => {
+                showToastr('error');
+            }
+        );
     }; 
 
     const deleteTodo = async (id) => {
         if (window.confirm('Are you sure you want to delete?')) {
-            await fetch(`/todo/${id}`, { method: 'DELETE' });
-            setTodo(todo.filter((item) => item.id !== id));
+            await fetch(`/todo/${id}`, { method: 'DELETE' }).then(
+                (data) => {
+                    showToastr('success');
+                    setTodo(todo.filter((item) => item.id !== id));
+                },
+                (err) => {
+                    showToastr('error');
+                }
+            );
         }
     };
 
@@ -56,9 +75,28 @@ export const TodoService = ({children}) => {
             body: JSON.stringify(updatedItem),
         });
 
-        const data = await response.json();
-        setTodo(todo.map((item) => item.id === id ? { ...item, ...data} : item));
+        await response.json().then(
+            (data) => {
+                showToastr('success');
+                setTodo(todo.map((item) => item.id === id ? { ...item, ...data} : item));
+            },
+            (err) => {
+                showToastr('error');
+            }
+        );
     };
+
+    const showToastr = async (status) => {
+        setToastr({
+            display: true,
+            status
+        });
+        setTimeout(() => {
+            setToastr({
+                display: false,
+            });
+        }, 1500);
+    }
 
     return <TodoContext.Provider value={{
         todo,
@@ -70,6 +108,7 @@ export const TodoService = ({children}) => {
         updateTodo,
     }}>
         {children}
+        <Toastr display={toastr.display} status={toastr.status}/>
     </TodoContext.Provider>
 };
 
