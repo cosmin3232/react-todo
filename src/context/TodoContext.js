@@ -14,15 +14,15 @@ export const TodoService = ({children}) => {
     }, []);
 
     const fetchData = async () => {
-        const response = await fetch('/feedback?_sort=id&_order=desc');
-        const data = await response.json();
+        const response = await fetch('/todo');
+        const data = await response.clone().json();
         setTodo(data);
         setIsLoading(false);
     }
 
     
     const addTodo = async (newTodo) => {
-        const response = await fetch('/feedback', {
+        const response = await fetch('/todo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export const TodoService = ({children}) => {
 
     const deleteTodo = async (id) => {
         if (window.confirm('Are you sure you want to delete?')) {
-            await fetch(`/feedback/${id}`, { method: 'DELETE' });
+            await fetch(`/todo/${id}`, { method: 'DELETE' });
             setTodo(todo.filter((item) => item.id !== id));
         }
     };
@@ -48,7 +48,7 @@ export const TodoService = ({children}) => {
     };
 
     const updateTodo = async (id, updatedItem) => {
-        const response = await fetch(`/feedback/${id}`, {
+        const response = await fetch(`/todo/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

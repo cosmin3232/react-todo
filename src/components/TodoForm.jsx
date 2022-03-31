@@ -17,6 +17,7 @@ function TodoForm() {
       setBtnDisabled(false);
       setText(todoEdit.item.text);
       setStatus(todoEdit.item.status);
+      setDate(todoEdit.item.date);
     }
   }, [todoEdit]);
 
@@ -64,7 +65,7 @@ function TodoForm() {
         <h2>Add todo element</h2>
         <StatusSelect select={(status) => setStatus(status)}/>
         <div className="">
-          <input onChange={handleTextChange} type="text" value={text} placeholder="Write review"/>
+          <input onChange={handleTextChange} type="text" value={text} placeholder="Write a description"/>
           <input onChange={handleDateChange} type="date" value={date} lang="ro-RO" placeholder="Choose the date"/>
         </div>
         <Button type='submit' version='primary' isDisabled={btnDisabled}>
